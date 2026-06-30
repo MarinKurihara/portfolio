@@ -1,10 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+
+const sections = ["home", "about", "services", "portfolio", "skills", "certificate", "contact"]
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -12,13 +14,10 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = document.querySelectorAll("section[id]")
       let currentSection = "home"
 
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop
-        const sectionHeight = section.clientHeight
-        if (window.scrollY >= sectionTop - 100) {
+      document.querySelectorAll<HTMLElement>("section[id]").forEach((section) => {
+        if (window.scrollY >= section.offsetTop - 100) {
           currentSection = section.id
         }
       })
@@ -26,74 +25,82 @@ export function Header() {
       setActiveSection(currentSection)
     }
 
+    handleScroll()
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      const offset = 80 // Height of the fixed header
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - offset
+    const scroll = () => {
+      const element = document.getElementById(sectionId)
+      if (!element) return
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
+      const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - 80
+
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" })
     }
-    setIsMenuOpen(false)
+
+    if (isMenuOpen) {
+      setIsMenuOpen(false)
+      window.requestAnimationFrame(() => window.requestAnimationFrame(scroll))
+      return
+    }
+
+    scroll()
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Link href="#home" onClick={() => scrollToSection("home")} className="font-bold text-xl">
-          DesignCraft Studio
+    <header className="sticky top-0 z-50 w-full border-b border-[#202722]/15 bg-[#f7f7f4]/95 backdrop-blur-md">
+      <div className="container flex h-[84px] items-center justify-between px-4 md:px-6">
+        <Link
+          href="#home"
+          onClick={() => scrollToSection("home")}
+          className="font-serif text-xl font-normal text-[#202722]"
+        >
+          Marin Kurihara
         </Link>
-        <nav className="hidden md:flex gap-6">
-          {["home", "services", "portfolio", "skills", "testimonials", "contact"].map((section) => (
+        <nav className="hidden gap-2 lg:flex xl:gap-5" aria-label="Main navigation">
+          {sections.map((section) => (
             <button
               key={section}
               onClick={() => scrollToSection(section)}
-              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
-                activeSection === section ? "bg-primary text-white" : "hover:bg-primary hover:text-white"
+              className={`relative px-2 py-2 pl-4 text-[0.78rem] font-medium tracking-[0.14em] transition-colors before:absolute before:left-1 before:top-1/2 before:h-4 before:w-px before:-translate-y-1/2 before:origin-top before:scale-y-0 before:bg-[#55705d] before:transition-transform before:duration-300 ${
+                activeSection === section
+                  ? "text-[#55705d] before:scale-y-100"
+                  : "text-[#202722] hover:text-[#55705d] hover:before:scale-y-100"
               }`}
             >
-              {section.charAt(0).toUpperCase() + section.slice(1)}
+              {section}
             </button>
           ))}
         </nav>
-          {/* 今はいらない NO needed at the moment */}
-        {/* <Button asChild className="hidden md:inline-flex">
-          <Link href="https://www.fiverr.com/yourusername" target="_blank" rel="noopener noreferrer">
-            Hire Me on Fiverr
-          </Link>
-        </Button> */}
-
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="rounded-none text-[#202722] hover:bg-[#e4e7e1] lg:hidden"
+          onClick={() => setIsMenuOpen((open) => !open)}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
       </div>
       {isMenuOpen && (
-        <div className="container md:hidden py-4 border-t">
-          <nav className="flex flex-col gap-4">
-            {["home", "services", "portfolio", "skills", "testimonials", "contact"].map((section) => (
+        <div className="container border-t border-[#202722]/15 bg-[#f7f7f4] px-4 py-5 lg:hidden">
+          <nav className="flex flex-col" aria-label="Mobile navigation">
+            {sections.map((section) => (
               <button
                 key={section}
                 onClick={() => scrollToSection(section)}
-                className={`text-sm font-medium transition-colors px-3 py-2 rounded-md text-left ${
-                  activeSection === section ? "bg-primary text-white" : "hover:bg-primary hover:text-white"
+                className={`relative border-b border-[#202722]/10 px-3 py-4 pl-5 text-left text-sm font-medium tracking-[0.14em] transition-colors before:absolute before:left-1 before:top-1/2 before:h-4 before:w-px before:-translate-y-1/2 before:scale-y-0 before:bg-[#55705d] before:transition-transform ${
+                  activeSection === section
+                    ? "text-[#55705d] before:scale-y-100"
+                    : "text-[#202722] hover:text-[#55705d]"
                 }`}
               >
-                {section.charAt(0).toUpperCase() + section.slice(1)}
+                {section}
               </button>
             ))}
-            <Button asChild className="w-full">
-              <Link href="https://www.fiverr.com/yourusername" target="_blank" rel="noopener noreferrer">
-                Hire Me on Fiverr
-              </Link>
-            </Button>
           </nav>
         </div>
       )}

@@ -1,12 +1,15 @@
 import type React from "react"
 import "./globals.css"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 
-const inter = Inter({ subsets: ["latin"] })
+const sofiaPro = localFont({
+  src: "../public/font/Sofia Pro Regular.otf",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: "DesignCraft Studio | Graphic Designer & Web Developer",
+  title: "Marin Kurihara | Graphic Designer & Web Developer",
   description: "Portfolio showcasing graphic design and web development projects",
     generator: 'v0.dev'
 }
@@ -18,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={sofiaPro.className}>{children}</body>
     </html>
   )
 }

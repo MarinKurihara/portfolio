@@ -1,168 +1,93 @@
 "use client"
 
-import { useState } from "react"
-import { Mail, MapPin, Phone } from "lucide-react"
+import { useState, type FormEvent } from "react"
+import { useRouter } from "next/navigation"
+import { Send } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 export function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  })
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     setIsSubmitting(true)
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
-    })
-
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    })
-    setIsSubmitting(false)
+    router.push("/thank-you")
   }
 
   return (
-    <section id="contact" className="py-16 md:py-24">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">Contact</div>
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Get In Touch</h2>
-            <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Have a project in mind? Let's discuss how I can help bring your vision to life.
-            </p>
+    <section id="contact" className="border-t border-[#202722]/12 bg-[#dfe4dc] py-24 md:py-32">
+      <div className="container grid gap-14 px-4 md:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+        <div>
+          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#55705d]">Contact</p>
+          <h2 className="mt-6 max-w-md font-serif text-4xl font-normal leading-tight md:text-5xl">
+            Let's create something thoughtful.
+          </h2>
+          <p className="mt-6 max-w-md leading-7 text-[#59615b]">
+            Have a project or idea in mind? Share a few details and I’ll be in touch.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="border-t border-[#202722]/20 pt-8">
+          <div className="grid gap-8 md:grid-cols-2">
+            <div className="space-y-3">
+              <Label htmlFor="full-name" className="text-xs uppercase tracking-[0.16em] text-[#39433c]">
+                Full name
+              </Label>
+              <Input
+                id="full-name"
+                name="fullName"
+                autoComplete="name"
+                placeholder="Your full name"
+                minLength={2}
+                required
+                className="h-12 rounded-none border-x-0 border-t-0 border-[#202722]/30 bg-transparent px-0 text-base shadow-none placeholder:text-[#59615b]/55 focus-visible:border-[#55705d] focus-visible:ring-0 focus-visible:ring-offset-0"
+              />
+            </div>
+            <div className="space-y-3">
+              <Label htmlFor="email" className="text-xs uppercase tracking-[0.16em] text-[#39433c]">
+                Email address
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                required
+                className="h-12 rounded-none border-x-0 border-t-0 border-[#202722]/30 bg-transparent px-0 text-base shadow-none placeholder:text-[#59615b]/55 focus-visible:border-[#55705d] focus-visible:ring-0 focus-visible:ring-offset-0"
+              />
+            </div>
           </div>
-        </div>
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 lg:grid-cols-3 mt-12">
-          <Card className="border-0 shadow-md animate-fade-in animate-delay-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-            <CardContent className="p-6 flex flex-col items-center text-center">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <Phone className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Phone</h3>
-              <p className="text-muted-foreground">
-                <a href="tel:+12345678900" className="hover:text-primary transition-colors">
-                  +1 (234) 567-8900
-                </a>
-              </p>
-              <p className="text-sm text-muted-foreground mt-2">Monday - Friday, 9am - 5pm EST</p>
-            </CardContent>
-          </Card>
-          <Card className="border-0 shadow-md animate-fade-in animate-delay-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-            <CardContent className="p-6 flex flex-col items-center text-center">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <Mail className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Email</h3>
-              <p className="text-muted-foreground">
-                <a href="mailto:contact@designcraft.studio" className="hover:text-primary transition-colors">
-                  contact@designcraft.studio
-                </a>
-              </p>
-              <p className="text-sm text-muted-foreground mt-2">I'll respond to your message within 24 hours</p>
-            </CardContent>
-          </Card>
-          <Card className="border-0 shadow-md animate-fade-in animate-delay-300 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-            <CardContent className="p-6 flex flex-col items-center text-center">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <MapPin className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Location</h3>
-              <p className="text-muted-foreground">123 Design Street, Creative City, State 12345, USA</p>
-              <p className="text-sm text-muted-foreground mt-2">Available for remote work worldwide</p>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="mx-auto max-w-5xl mt-12 animate-fade-in animate-delay-400">
-          <Card className="border-0 shadow-md">
-            <CardContent className="p-6 md:p-8">
-              <form onSubmit={handleSubmit} className="grid gap-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      placeholder="Your name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="transition-all duration-300 focus:border-primary focus:ring-primary"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Your email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="transition-all duration-300 focus:border-primary focus:ring-primary"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject</Label>
-                  <Input
-                    id="subject"
-                    name="subject"
-                    placeholder="Project inquiry"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="transition-all duration-300 focus:border-primary focus:ring-primary"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    placeholder="Tell me about your project..."
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="min-h-[150px] transition-all duration-300 focus:border-primary focus:ring-primary"
-                    required
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="w-full md:w-auto transition-transform hover:scale-105"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+
+          <div className="mt-9 space-y-3">
+            <Label htmlFor="message" className="text-xs uppercase tracking-[0.16em] text-[#39433c]">
+              Message
+            </Label>
+            <Textarea
+              id="message"
+              name="message"
+              placeholder="Tell me a little about your project or idea..."
+              minLength={10}
+              required
+              className="min-h-[160px] resize-y rounded-none border-[#202722]/30 bg-[#f7f7f4]/50 p-4 text-base shadow-none placeholder:text-[#59615b]/55 focus-visible:border-[#55705d] focus-visible:ring-0 focus-visible:ring-offset-0"
+            />
+          </div>
+
+          <Button
+            type="submit"
+            size="lg"
+            disabled={isSubmitting}
+            className="mt-8 rounded-none bg-[#202722] px-8 text-white shadow-none transition-colors hover:bg-[#55705d]"
+          >
+            {isSubmitting ? "Sending..." : "Send Message"}
+            <Send className="ml-2 h-4 w-4" />
+          </Button>
+        </form>
       </div>
     </section>
   )

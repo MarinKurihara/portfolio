@@ -2,65 +2,55 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { ExternalLink, Maximize2 } from "lucide-react"
+import { Maximize2 } from "lucide-react"
 
+import { SectionHeading } from "@/components/section-heading"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const portfolioItems = [
+type PortfolioItem = {
+  id: number
+  title: string
+  category: "graphic" | "web" | "ux"
+  categoryLabel: string
+  image: string
+  description: string
+  imageClassName: string
+}
+
+const portfolioItems: PortfolioItem[] = [
   {
     id: 1,
-    title: "Brand Identity Design",
+    title: "Social media post design for Garage Door Intel",
     category: "graphic",
-    image: "/placeholder.svg?height=600&width=800",
-    description: "Complete brand identity design including logo, color palette, typography, and brand guidelines.",
-    link: "#",
+    categoryLabel: "Digital campaign",
+    image: "/garage_door_intel.png",
+    description: "Social media campaign creative developed for Garage Door Intel.",
+    imageClassName: "object-cover",
   },
   {
     id: 2,
-    title: "E-commerce Website",
-    category: "web",
-    image: "/placeholder.svg?height=600&width=800",
-    description: "Fully responsive e-commerce website with product catalog, shopping cart, and secure checkout.",
-    link: "#",
+    title: "AtYou logo concept",
+    category: "graphic",
+    categoryLabel: "Brand identity",
+    image: "/atyou.png",
+    description: "A clean, contemporary logo concept created for AtYou.",
+    imageClassName: "object-contain p-10 md:p-14",
   },
   {
     id: 3,
-    title: "Mobile App UI Design",
-    category: "ui",
-    image: "/placeholder.svg?height=600&width=800",
-    description: "User interface design for a mobile application with a focus on user experience and accessibility.",
-    link: "#",
-  },
-  {
-    id: 4,
-    title: "Corporate Website Redesign",
-    category: "web",
-    image: "/placeholder.svg?height=600&width=800",
-    description: "Complete redesign of a corporate website to improve user experience and conversion rates.",
-    link: "#",
-  },
-  {
-    id: 5,
-    title: "Product Packaging Design",
+    title: "Garage Door Intel logo mark",
     category: "graphic",
-    image: "/placeholder.svg?height=600&width=800",
-    description: "Creative packaging design for a consumer product that stands out on the shelf.",
-    link: "#",
-  },
-  {
-    id: 6,
-    title: "Portfolio Website",
-    category: "web",
-    image: "/placeholder.svg?height=600&width=800",
-    description: "Custom portfolio website for a photographer showcasing their work in a visually appealing way.",
-    link: "#",
+    categoryLabel: "Brand identity",
+    image: "/logo_garagegoorintel.png",
+    description: "A compact logo mark designed for Garage Door Intel.",
+    imageClassName: "object-contain p-12 md:p-16",
   },
 ]
 
 export function Portfolio() {
-  const [selectedItem, setSelectedItem] = useState(null)
+  const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null)
   const [open, setOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("all")
 
@@ -68,73 +58,64 @@ export function Portfolio() {
     activeTab === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === activeTab)
 
   return (
-    <section id="portfolio" className="py-16 md:py-24 bg-muted/30">
+    <section id="portfolio" className="border-t border-[#202722]/12 bg-[#f7f7f4] py-24 md:py-32">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">Portfolio</div>
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">My Recent Work</h2>
-            <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              A selection of my recent projects showcasing my skills in graphic design and web development.
-            </p>
-          </div>
-        </div>
-        <Tabs defaultValue="all" className="mt-12" onValueChange={setActiveTab}>
-          <div className="flex justify-center">
-            <TabsList>
-              <TabsTrigger value="all">All</TabsTrigger>
-              <TabsTrigger value="graphic">Graphic Design</TabsTrigger>
-              <TabsTrigger value="web">Web Development</TabsTrigger>
-              <TabsTrigger value="ui">UI/UX Design</TabsTrigger>
+        <SectionHeading
+          eyebrow="Portfolio"
+          title="My Work"
+          description="A selection of projects demonstrating my approach to thoughtful design and reliable digital delivery."
+        />
+        <Tabs defaultValue="all" className="mt-14" onValueChange={setActiveTab}>
+          <div className="max-w-full overflow-x-auto border-b border-[#202722]/15">
+            <TabsList className="h-auto min-w-max justify-start gap-7 rounded-none bg-transparent p-0">
+              {[
+                ["all", "All"],
+                ["web", "Web & Platforms"],
+                ["graphic", "Digital Campaigns"],
+                ["ux", "UX & Prototypes"],
+              ].map(([value, label]) => (
+                <TabsTrigger
+                  key={value}
+                  value={value}
+                  className="rounded-none border-b border-transparent px-0 py-4 text-xs uppercase tracking-[0.16em] shadow-none data-[state=active]:border-[#55705d] data-[state=active]:bg-transparent data-[state=active]:text-[#55705d] data-[state=active]:shadow-none"
+                >
+                  {label}
+                </TabsTrigger>
+              ))}
             </TabsList>
           </div>
-          <TabsContent value={activeTab} className="mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredItems.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={`group relative overflow-hidden rounded-lg border bg-background shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="aspect-video overflow-hidden">
+          <TabsContent value={activeTab} className="mt-10">
+            <div className="grid grid-cols-1 gap-x-7 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+              {filteredItems.map((item) => (
+                <article key={item.id} className="group">
+                  <div className="relative aspect-[4/3] overflow-hidden border border-[#202722]/12 bg-white">
                     <Image
-                      src={item.image || "/placeholder.svg"}
+                      src={item.image}
                       alt={item.title}
-                      width={800}
-                      height={600}
-                      className="object-cover transition-all duration-500 group-hover:scale-110"
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className={`${item.imageClassName} transition-transform duration-500 group-hover:scale-[1.02]`}
                     />
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold group-hover:text-primary transition-colors">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground line-clamp-2 mt-1">{item.description}</p>
-                    <div className="flex gap-2 mt-3">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
-                          setSelectedItem(item)
-                          setOpen(true)
-                        }}
-                        className="transition-colors hover:bg-primary hover:text-white hover:border-primary"
-                      >
-                        <Maximize2 className="h-4 w-4 mr-1" />
-                        Details
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        asChild
-                        className="transition-colors hover:bg-primary hover:text-white hover:border-primary"
-                      >
-                        <a href={item.link} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-1" />
-                          View Live
-                        </a>
-                      </Button>
+                  <div className="mt-5 flex items-start justify-between gap-5 border-t border-[#202722]/15 pt-5">
+                    <div>
+                      <p className="text-[0.65rem] uppercase tracking-[0.18em] text-[#55705d]">{item.categoryLabel}</p>
+                      <h3 className="mt-2 font-serif text-xl font-normal leading-snug">{item.title}</h3>
                     </div>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        setSelectedItem(item)
+                        setOpen(true)
+                      }}
+                      className="h-auto shrink-0 rounded-none px-0 py-1 text-[#55705d] hover:bg-transparent hover:text-[#202722]"
+                    >
+                      <Maximize2 className="mr-2 h-4 w-4" />
+                      View
+                    </Button>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           </TabsContent>
@@ -142,27 +123,19 @@ export function Portfolio() {
       </div>
       {selectedItem && (
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="max-w-3xl animate-scale-in">
-            <DialogHeader>
-              <DialogTitle>{selectedItem.title}</DialogTitle>
-              <DialogDescription>{selectedItem.description}</DialogDescription>
+          <DialogContent className="max-w-3xl rounded-none border-[#202722]/20 bg-[#f7f7f4] p-7 shadow-2xl">
+            <DialogHeader className="border-b border-[#202722]/15 pb-5 text-left">
+              <DialogTitle className="font-serif text-3xl font-normal">{selectedItem.title}</DialogTitle>
+              <DialogDescription className="leading-6 text-[#59615b]">{selectedItem.description}</DialogDescription>
             </DialogHeader>
-            <div className="mt-4">
+            <div className="relative mt-2 aspect-[4/3] bg-white">
               <Image
-                src={selectedItem.image || "/placeholder.svg"}
+                src={selectedItem.image}
                 alt={selectedItem.title}
-                width={800}
-                height={600}
-                className="rounded-lg object-cover w-full"
+                fill
+                sizes="(min-width: 768px) 720px, 90vw"
+                className={selectedItem.imageClassName}
               />
-            </div>
-            <div className="flex justify-end mt-4">
-              <Button asChild>
-                <a href={selectedItem.link} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  View Project
-                </a>
-              </Button>
             </div>
           </DialogContent>
         </Dialog>

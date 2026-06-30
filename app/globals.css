@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 142 76% 36%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 142 76% 96%;
-    --secondary-foreground: 142 76% 26%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 142 76% 96%;
-    --accent-foreground: 142 76% 26%;
+    --background: 60 12% 96%;
+    --foreground: 140 10% 14%;
+    --card: 60 14% 98%;
+    --card-foreground: 140 10% 14%;
+    --popover: 60 14% 98%;
+    --popover-foreground: 140 10% 14%;
+    --primary: 137 14% 39%;
+    --primary-foreground: 60 14% 98%;
+    --secondary: 120 8% 90%;
+    --secondary-foreground: 140 10% 20%;
+    --muted: 105 9% 91%;
+    --muted-foreground: 132 6% 38%;
+    --accent: 120 8% 90%;
+    --accent-foreground: 140 10% 20%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 142 76% 36%;
-    --radius: 0.5rem;
+    --border: 120 7% 78%;
+    --input: 120 7% 78%;
+    --ring: 137 14% 39%;
+    --radius: 0.125rem;
   }
 
   .dark {
@@ -55,10 +55,24 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
   }
   html {
     scroll-behavior: smooth;
   }
+}
+
+::selection {
+  background: #b8c5bb;
+  color: #202722;
+}
+
+.font-signature {
+  font-family: "Snell Roundhand", "Apple Chancery", "Brush Script MT", cursive;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 /* Add animations */
@@ -170,6 +184,20 @@
   50% {
     transform: translateY(-10px);
   }
+}
+
+@keyframes gentleBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-gentle-bounce {
+  animation: gentleBounce 2.8s ease-in-out infinite;
 }
 
 /* Add this if you want a smooth transition when the scroll button appears/disappears */
