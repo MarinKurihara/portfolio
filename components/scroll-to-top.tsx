@@ -28,14 +28,12 @@ export function ScrollToTop() {
   }
 
   return (
-    <div
-      className={`fixed bottom-8 right-8 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
-    >
+    <div className={`fixed bottom-6 right-6 z-40 transition-opacity duration-300 ${isVisible ? "opacity-100" : "pointer-events-none opacity-0"}`}>
       <Button
         variant="outline"
         size="icon"
         onClick={scrollToTop}
-        className="h-10 w-10 rounded-full bg-primary text-white hover:bg-primary/90 hover:scale-110 transition-transform shadow-lg"
+        className="h-10 w-10 rounded-none border-[#f7f7f4]/30 bg-[#55705d] text-white shadow-none transition-colors hover:bg-[#202722] hover:text-white"
       >
         <ArrowUp className="h-5 w-5" />
         <span className="sr-only">Scroll to top</span>

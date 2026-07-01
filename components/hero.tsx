@@ -1,59 +1,60 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Download } from "lucide-react"
+import { ArrowDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
 export function Hero() {
   return (
-    <section id="home" className="relative min-h-screen py-20 md:py-32">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0d92dc] to-white">
-        <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]" >
+    <section
+      id="home"
+      className="relative min-h-[calc(100svh-116px)] overflow-hidden bg-[#f2f3f0] text-[#202722]"
+    >
+      <div className="container relative grid min-h-[calc(100svh-116px)] grid-cols-1 gap-8 px-4 py-5 md:px-6 lg:grid-cols-[minmax(300px,0.72fr)_minmax(0,1.55fr)] lg:gap-16 lg:py-8">
+        <div className="relative min-h-[240px] overflow-hidden lg:min-h-0">
+          <Image
+            src="/hero-ocean.png"
+            alt="A calm ocean beneath soft overcast clouds"
+            fill
+            priority
+            sizes="(min-width: 1024px) 34vw, 100vw"
+            className="object-cover object-[center_42%] lg:object-[center_58%]"
+          />
+          <div className="absolute inset-0 bg-[#1f2924]/10" aria-hidden="true" />
+          <p className="absolute bottom-5 left-5 max-w-[15rem] text-xs leading-5 text-white/90 md:bottom-7 md:left-7">
+            Thoughtful systems. Clear experiences. Work made to last.
+          </p>
+        </div>
 
-        {/* Wave Pattern Overlay */}
-          <svg
-            className="absolute inset-x-0 top-0 w-full h-24 text-white/20"
-            viewBox="0 0 1440 320"
-            preserveAspectRatio="none"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
+        <div className="relative flex min-h-[320px] flex-col border-b border-[#202722]/15 pb-24 lg:min-h-0 lg:justify-center lg:border-b-0 lg:pb-40">
+          <div className="relative z-10 max-w-2xl lg:ml-auto lg:mr-[8%]">
+            <p className="mb-6 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#55705d]">
+              Design · Development · Digital
+            </p>
+            <h1 className="max-w-xl font-serif text-4xl font-normal leading-[1.12] sm:text-5xl lg:text-6xl">
+              Designing thoughtful digital experiences.
+            </h1>
+            <p className="mt-6 max-w-lg text-base leading-7 text-[#4d5650] md:text-lg md:leading-8">
+              Combining considered design, clean code, and practical AI to create work that feels clear and useful.
+            </p>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="mt-8 rounded-none border-[#202722]/55 bg-transparent px-7 text-[#202722] shadow-none transition-colors hover:border-[#55705d] hover:bg-[#55705d] hover:text-white"
+            >
+              <Link href="#portfolio">
+                Explore My Work
+                <ArrowDown className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div
+            className="font-signature pointer-events-none absolute bottom-1 right-0 z-0 select-none text-7xl leading-none text-[#171c18] sm:text-8xl md:text-[8rem] lg:bottom-3 lg:text-[10rem]"
+            aria-hidden="true"
           >
-            <path d="M0,160L80,149.3C160,139,320,117,480,122.7C640,128,800,160,960,170.7C1120,181,1280,171,1360,165.3L1440,160L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z" />
-          </svg>
-          </div>
-      </div>
-
-      <div className="container relative z-10 px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-          <div className="flex flex-col justify-center space-y-4 animate-fade-in">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-gray-700">
-                Graphic Designer & Web Developer
-              </h1>
-              <p className="max-w-[600px] text-gray-600 md:text-xl">
-                Transforming ideas into stunning visuals and functional websites. Let's create something amazing
-                together.
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button asChild size="lg" className="bg-primary/90 hover:bg-primary">
-                <Link href="#portfolio">
-                  View My Work
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" className="bg-white/50 hover:bg-white/70">
-                <Download className="mr-2 h-4 w-4" />
-                Download Resume
-              </Button>
-            </div>
-          </div>
-          <div className="flex items-center justify-center animate-scale-in animate-delay-300">
-            <div className="relative aspect-square overflow-hidden rounded-full border-8 border-white/50 w-[280px] h-[280px] md:w-[400px] md:h-[400px] animate-pulse-slow">
-              <Image src="/profile_image.jpeg" alt="Profile" fill className="object-cover" priority />
-              <div className="absolute inset-0 bg-white/10" ></div>
-            </div>
+            Marin
           </div>
         </div>
       </div>
