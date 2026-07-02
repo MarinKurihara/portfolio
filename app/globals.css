@@ -75,6 +75,51 @@
   letter-spacing: 0;
 }
 
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-image-reveal,
+.hero-signature-reveal {
+  opacity: 0;
+  animation: heroFadeIn 2s ease-out forwards;
+}
+
+.hero-signature-reveal {
+  animation-delay: 200ms;
+  animation-duration: 3s;
+}
+
+.hero-heading-reveal {
+  opacity: 0;
+  animation: heroFadeUp 2s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-image-reveal,
+  .hero-signature-reveal,
+  .hero-heading-reveal {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 /* Add animations */
 @keyframes fadeIn {
   from {

@@ -1,12 +1,15 @@
 import Link from "next/link"
-import { ArrowUp, Facebook, Github, Instagram, Linkedin, Twitter } from "lucide-react"
+import { ArrowUp, Github, Instagram, Linkedin } from "lucide-react"
 
 const socialLinks = [
-  { label: "Twitter", icon: Twitter },
-  { label: "Instagram", icon: Instagram },
-  { label: "GitHub", icon: Github },
-  { label: "LinkedIn", icon: Linkedin },
-  { label: "Facebook", icon: Facebook },
+  { label: "Instagram", icon: Instagram, href: "#", hidden: true },
+  { label: "GitHub", icon: Github, href: "#", hidden: true },
+  {
+    label: "LinkedIn",
+    icon: Linkedin,
+    href: "https://www.linkedin.com/in/marin-kurihara",
+    hidden: false,
+  },
 ]
 
 export function Footer() {
@@ -27,8 +30,10 @@ export function Footer() {
               return (
                 <Link
                   key={social.label}
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center border border-white/20 text-white/60 transition-colors hover:border-white/60 hover:text-white"
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${social.hidden ? "hidden" : "flex"} h-9 w-9 items-center justify-center border border-white/20 text-white/60 transition-colors hover:border-white/60 hover:text-white`}
                 >
                   <Icon className="h-4 w-4" />
                   <span className="sr-only">{social.label}</span>
