@@ -1,23 +1,20 @@
 "use client"
 
-import { useState, type FormEvent } from "react"
-import { useRouter } from "next/navigation"
+import { useActionState } from "react"
 import { Send } from "lucide-react"
 
+import { sendContactEmail, type ContactFormState } from "@/app/actions/contact"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
-export function ContactForm() {
-  const router = useRouter()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+const initialState: ContactFormState = {
+  status: "idle",
+}
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setIsSubmitting(true)
-    router.push("/thank-you")
-  }
+export function ContactForm() {
+  const [state, formAction, isPending] = useActionState(sendContactEmail, initialState)
 
   return (
     <section id="contact" className="border-t border-[#202722]/12 bg-[#dfe4dc] py-24 md:py-32">
@@ -32,7 +29,11 @@ export function ContactForm() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="border-t border-[#202722]/20 pt-8">
+        <form action={formAction} className="border-t border-[#202722]/20 pt-8">
+          <div className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            <Label htmlFor="website">Website</Label>
+            <Input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+          </div>
           <div className="grid gap-8 md:grid-cols-2">
             <div className="space-y-3">
               <Label htmlFor="full-name" className="text-xs uppercase tracking-[0.16em] text-[#39433c]">
@@ -45,8 +46,15 @@ export function ContactForm() {
                 placeholder="Your full name"
                 minLength={2}
                 required
+                aria-invalid={Boolean(state.fieldErrors?.fullName)}
+                aria-describedby={state.fieldErrors?.fullName ? "full-name-error" : undefined}
                 className="h-12 rounded-none border-x-0 border-t-0 border-[#202722]/30 bg-transparent px-0 text-base shadow-none placeholder:text-[#59615b]/55 focus-visible:border-[#55705d] focus-visible:ring-0 focus-visible:ring-offset-0"
               />
+              {state.fieldErrors?.fullName?.[0] && (
+                <p id="full-name-error" className="text-sm text-red-800">
+                  {state.fieldErrors.fullName[0]}
+                </p>
+              )}
             </div>
             <div className="space-y-3">
               <Label htmlFor="email" className="text-xs uppercase tracking-[0.16em] text-[#39433c]">
@@ -59,8 +67,15 @@ export function ContactForm() {
                 autoComplete="email"
                 placeholder="you@example.com"
                 required
+                aria-invalid={Boolean(state.fieldErrors?.email)}
+                aria-describedby={state.fieldErrors?.email ? "email-error" : undefined}
                 className="h-12 rounded-none border-x-0 border-t-0 border-[#202722]/30 bg-transparent px-0 text-base shadow-none placeholder:text-[#59615b]/55 focus-visible:border-[#55705d] focus-visible:ring-0 focus-visible:ring-offset-0"
               />
+              {state.fieldErrors?.email?.[0] && (
+                <p id="email-error" className="text-sm text-red-800">
+                  {state.fieldErrors.email[0]}
+                </p>
+              )}
             </div>
           </div>
 
@@ -74,17 +89,30 @@ export function ContactForm() {
               placeholder="Tell me a little about your project or idea..."
               minLength={10}
               required
+              aria-invalid={Boolean(state.fieldErrors?.message)}
+              aria-describedby={state.fieldErrors?.message ? "message-error" : undefined}
               className="min-h-[160px] resize-y rounded-none border-[#202722]/30 bg-[#f7f7f4]/50 p-4 text-base shadow-none placeholder:text-[#59615b]/55 focus-visible:border-[#55705d] focus-visible:ring-0 focus-visible:ring-offset-0"
             />
+            {state.fieldErrors?.message?.[0] && (
+              <p id="message-error" className="text-sm text-red-800">
+                {state.fieldErrors.message[0]}
+              </p>
+            )}
           </div>
+
+          {state.status === "error" && state.message && (
+            <p role="alert" className="mt-6 border-l-2 border-red-800 pl-4 text-sm text-red-900">
+              {state.message}
+            </p>
+          )}
 
           <Button
             type="submit"
             size="lg"
-            disabled={isSubmitting}
+            disabled={isPending}
             className="mt-8 rounded-none bg-[#202722] px-8 text-white shadow-none transition-colors hover:bg-[#55705d]"
           >
-            {isSubmitting ? "Sending..." : "Send Message"}
+            {isPending ? "Sending..." : "Send Message"}
             <Send className="ml-2 h-4 w-4" />
           </Button>
         </form>

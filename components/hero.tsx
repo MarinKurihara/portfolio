@@ -11,7 +11,7 @@ export function Hero() {
       className="relative min-h-[calc(100svh-116px)] overflow-hidden bg-[#f2f3f0] text-[#202722]"
     >
       <div className="container relative grid min-h-[calc(100svh-116px)] grid-cols-1 gap-8 px-4 py-5 md:px-6 lg:grid-cols-[minmax(300px,0.72fr)_minmax(0,1.55fr)] lg:gap-16 lg:py-8">
-        <div className="relative min-h-[240px] overflow-hidden lg:min-h-0">
+        <div className="hero-image-reveal relative min-h-[240px] overflow-hidden lg:min-h-0">
           <Image
             src="/hero-ocean.png"
             alt="A calm ocean beneath soft overcast clouds"
@@ -31,7 +31,7 @@ export function Hero() {
             <p className="mb-6 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#55705d]">
               Design · Development · Digital
             </p>
-            <h1 className="max-w-xl font-serif text-4xl font-normal leading-[1.12] sm:text-5xl lg:text-6xl">
+            <h1 className="hero-heading-reveal max-w-xl font-serif text-4xl font-normal leading-[1.12] sm:text-5xl lg:text-6xl">
               Designing thoughtful digital experiences.
             </h1>
             <p className="mt-6 max-w-lg text-base leading-7 text-[#4d5650] md:text-lg md:leading-8">
@@ -51,7 +51,7 @@ export function Hero() {
           </div>
 
           <div
-            className="font-signature pointer-events-none absolute bottom-1 right-0 z-0 select-none text-7xl leading-none text-[#171c18] sm:text-8xl md:text-[8rem] lg:bottom-3 lg:text-[10rem]"
+            className="font-signature hero-signature-reveal pointer-events-none absolute bottom-1 right-0 z-0 select-none text-7xl leading-none text-[#171c18] sm:text-8xl md:text-[8rem] lg:bottom-3 lg:text-[10rem]"
             aria-hidden="true"
           >
             Marin
