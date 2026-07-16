@@ -1,9 +1,8 @@
 const story = [
-  "Originally from Japan and raised across different environments, I've always been drawn to connecting with people and creating things that genuinely help others. I particularly enjoy supporting individuals and small businesses. I like turning their ideas into something real, practical, and meaningful.",
-  "My journey into web development began during the COVID period, when I started learning web design through online courses in Japan. What started as curiosity quickly turned into hands-on experience through freelance projects, where I worked closely with clients to bring their ideas to life.",
-  "Currently, I am pursuing a Master of Information Technology, where I'm expanding my technical skills and learning how to apply data-driven thinking in real projects. I want to go beyond simply building websites and create solutions that are useful, measurable, and scalable.",
-  "I focus on building customer-centered websites that are easy to use, visually clear, and aligned with each client's identity. From design to development, I can handle the full process. I use tools like Illustrator and Photoshop to create unique designs, and I also work on both front-end and back-end tasks, including payment system integrations and API-based features.",
-  "Looking ahead, I am working on improving my data analysis skills so I can better understand user behavior and help businesses grow. My goal is to combine web development and data to create smarter and more effective digital experiences.",
+  "Originally from Japan and raised across different environments, I've always enjoyed connecting with people and creating solutions that genuinely help others. I especially enjoy supporting individuals and small businesses by turning their ideas into practical digital products.",
+  "My journey into web development began during the COVID pandemic, when I started learning web design through online courses. That curiosity soon led to freelance projects, where I worked closely with clients to bring their ideas to life.",
+  "I recently completed a Master of Information Technology, where I strengthened my skills in software development, data analysis, and AI. Today, I build user-centered websites from design to deployment, working across both front-end and back-end development, including payment integrations and API-driven features.",
+  "My goal is to combine web development, data, and AI to create digital experiences that are not only visually engaging, but also measurable, scalable, and valuable for both users and businesses.",
 ]
 
 export function About() {
