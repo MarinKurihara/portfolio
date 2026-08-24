@@ -13,6 +13,12 @@ type Certificate = {
 
 const certificates: Certificate[] = [
   {
+    title: "Master of Information Technology (Extension)",
+    description: "Master's degree completed at Kaplan Business School with a specialisation in Analytics.",
+    image: "/Master-of-Information-Technology-Certificate.png",
+    icon: GraduationCap,
+  },
+  {
     title: "Internship - IEF",
     description: "Web Development & Data Integration. Built a payment system integrated with Stripe and PayPal APIs.",
     image: "/IEF_Internship_Certificate.png",
